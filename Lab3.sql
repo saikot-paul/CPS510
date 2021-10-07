@@ -23,9 +23,18 @@ CREATE TABLE transaction(
     amount FLOAT, 
 ); 
 
-CREATE TABLE employee(); 
+CREATE TABLE employee(
+    employee_id INTEGER PRIMARY KEY NOT NULL,
+    emplyee_name VARCHAR(20),
+    address VARCHAR(20),
+    FOREIGN KEY(super_id) REFERENCES employee(employee_id)
+); 
 
-CREATE TABLE loan(); 
+CREATE TABLE loan(
+    loan_no INTEGER PRIMARY KEY NOT NULL,
+    intrest FLOAT,
+    FOREIGN KEY(emplyee_id)  REFERENCES empolyee(employee_id)
+); 
 
 CREATE TABLE branch(); 
 
