@@ -12,8 +12,7 @@ create table customer(
 create table account(
     account_no varchar(10),
     balance float default 0, 
-    primary key (account_no),
-    unique (account_no)
+    primary key (account_no)
 ); 
 
 create table savings_account( 
@@ -21,7 +20,7 @@ create table savings_account(
     balance float default 0 references account(balance),  
     interest float,
     
-    primary key (account_no)
+    foreign key (account_no)
 );
 
 /*Customer and accounts table - shows the M-N relationship between the two entities*/ 
@@ -49,7 +48,7 @@ create table transaction(
 
 /*Employee table with attributes no relationships shown in table*/ 
 create table employee(
-    emp_id varchar(10), 
+    emp_id INTEGER, 
     emp_name varchar(20), 
     address varchar(20), 
     primary key (emp_id) 
@@ -85,11 +84,9 @@ create table department(
 );
 
 /*Supervises table shows which employees are being supervised by who*/ 
-create table supervises(
-    superivisee varchar(10) references employee(emp_id), 
-    supervisor varchar(10) references supervisor(emp_id), 
-
-    primary key (supervisee, supervisor)
+CREATE TABLE supervises (
+    emp_id INTEGER,
+    FOREIGN KEY (emp_id) REFERENCES employee(emp_id)
 );
 
 /*Manages table shows which branches are being managed by which employee*/ 
