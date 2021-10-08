@@ -1,12 +1,13 @@
---/*Customer Table with its attributes*/ 
---create table customer(
---    customer_id varchar(10), 
---    customer_name varchar(20),
---    address varchar(20), 
---    pin varchar(4) not null, 
---    primary key (customer_id), 
---    unique (customer_id, pin)
---); 
+/*Customer Table with its attributes*/ 
+
+create table customer(
+    customer_id varchar(10), 
+    customer_name varchar(20),
+    address varchar(20), 
+    pin varchar(4) not null, 
+    primary key (customer_id), 
+    unique (customer_id, pin)
+); 
 
 /*Account table with attributes*/ 
 create table account(
@@ -20,7 +21,8 @@ create table savings_account(
     balance float default 0 references account(balance),  
     interest float,
     
-    foreign key (account_no)
+    foreign key (account_no) references account(account_no),
+    primary key(account_no) 
 );
 
 /*Customer and accounts table - shows the M-N relationship between the two entities*/ 
@@ -41,27 +43,27 @@ create table transaction(
     transaction_description varchar(20),  
     amount float, 
     account_no varchar(10),
-    primary key (transaction_id), 
     
-    foreign key (account_no) references account(account_no)
+    foreign key (account_no) references account(account_no), 
+    primary key (transaction_id)
 );
 
 /*Employee table with attributes no relationships shown in table*/ 
 create table employee(
-    emp_id INTEGER, 
+    emp_id integer, 
     emp_name varchar(20), 
     address varchar(20), 
     primary key (emp_id) 
 );
 
 create table branch_manager(
-    emp_id varchar(10) references employee(emp_id), 
+    emp_id integer references employee(emp_id), 
     
     primary key (emp_id)
 ); 
 
 create table department_supervisor(
-    emp_id varchar(10) references employee(emp_id), 
+    emp_id integer references employee(emp_id), 
     
     primary key (emp_id)
 );
@@ -85,14 +87,19 @@ create table department(
 
 /*Supervises table shows which employees are being supervised by who*/ 
 CREATE TABLE supervises (
-    emp_id INTEGER,
-    FOREIGN KEY (emp_id) REFERENCES employee(emp_id)
+    supervisee_id integer,
+    supervisor_id integer, 
+    
+    FOREIGN KEY (supervisee_id) REFERENCES employee(emp_id), 
+    FOREIGN KEY (supervisor_id) REFERENCES department_supervisor(emp_id), 
+    
+    primary key (supervisor_id, supervisee_id)
 );
 
 /*Manages table shows which branches are being managed by which employee*/ 
 create table manages(
     branch_no varchar(5) references branch(branch_no), 
-    emp_id varchar(10) references branch_manager(emp_id),
+    emp_id integer references branch_manager(emp_id),
     
     primary key (branch_no, emp_id)
 ); 
@@ -100,7 +107,7 @@ create table manages(
 /*Works for table shows what department each employee is working under*/ 
 create table works_for( 
     department_no varchar(5) references department(department_no), 
-    emp_id varchar(10) references employee(emp_id),
+    emp_id integer references employee(emp_id),
 
     primary key (department_no, emp_id)
 ); 
@@ -111,7 +118,8 @@ create table loan(
     loan_type varchar(10), 
     amount float, 
     customer_id varchar(10), 
-    employee_id varchar(10), 
+    employee_id integer, 
+    primary key (loan_no), 
     
     foreign key (customer_id) references customer(customer_id), 
     foreign key (employee_id) references employee(emp_id)
@@ -119,7 +127,7 @@ create table loan(
 
 /*Accesses table - shows the aggregate relationship between the employee, customer, account and transaction entities*/ 
 create table accesses( 
-    emp_id varchar(10), 
+    emp_id integer, 
     customer_id varchar(10), 
     account_no varchar(10),
     transaction_id varchar(10), 
