@@ -17,8 +17,7 @@ create table account(
 ); 
 
 create table savings_account( 
-    account_no varchar(10) references account(account_no), 
-    balance float default 0 references account(balance),  
+    account_no varchar(10), 
     interest float,
     
     foreign key (account_no) references account(account_no),
@@ -69,20 +68,29 @@ create table department_supervisor(
 );
 
 /*Branch table with attributes*/ 
-create table branch(
-    branch_no varchar(5), 
-    address varchar(20), 
-    bank_name varchar(20), 
-    
-    primary key (branch_no)
-); 
+CREATE TABLE branch ( 
+    branch_no INTEGER PRIMARY KEY,
+    emp_id INTEGER,
+    address VARCHAR(20) NOT NULL,
+    bank_name VARCHAR(20) NOT NULL,
+    phone_no NUMBER(9) NOT NULL,
+    FOREIGN KEY (emp_id) REFERENCES employee(emp_id)
+);
 
-/*Department table with attributes*/ 
-create table department( 
-    department_no varchar(5), 
-    deparment_name varchar(10), 
-    
-    primary key (department_no)
+CREATE TABLE department(
+    department_no VARCHAR(5) PRIMARY KEY,
+    emp_id INTEGER,
+    FOREIGN KEY (emp_id) REFERENCES employee(emp_id)
+);
+
+/*Relationship between department and branch*/
+
+CREATE TABLE branch_and_dept (
+   branch_no INTEGER,
+   department_no VARCHAR(5),
+   FOREIGN KEY (branch_no) REFERENCES branch(branch_no),
+   FOREIGN KEY (department_no) REFERENCES department(department_no),
+   PRIMARY KEY (branch_no, department_no)
 );
 
 /*Supervises table shows which employees are being supervised by who*/ 
@@ -98,7 +106,7 @@ CREATE TABLE supervises (
 
 /*Manages table shows which branches are being managed by which employee*/ 
 create table manages(
-    branch_no varchar(5) references branch(branch_no), 
+    branch_no integer references branch(branch_no), 
     emp_id integer references branch_manager(emp_id),
     
     primary key (branch_no, emp_id)
@@ -106,10 +114,12 @@ create table manages(
 
 /*Works for table shows what department each employee is working under*/ 
 create table works_for( 
-    department_no varchar(5) references department(department_no), 
-    emp_id integer references employee(emp_id),
+    department_no varchar(5),
+    emp_id integer,
+    FOREIGN KEY (department_no) references department(department_no), 
+    FOREIGN KEY (emp_id) references employee(emp_id)
 
-    primary key (department_no, emp_id)
+--    primary key (department_no, emp_id)
 ); 
 
 /*Loan table - customer_id and employee_id in this table used to show who requested and who approved the loan respectively*/ 
