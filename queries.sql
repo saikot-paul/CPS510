@@ -14,6 +14,7 @@
 --
 --INSERT INTO supervises VALUES(1234567, 1111111);
 --INSERT INTO supervises VALUES(3333333, 1111111);
+--INSERT INTO supervises VALUES(2222222, 4444444);
 --
 --INSERT INTO branch VALUES(022, 1111111, '123 Alberta Rd', 'CIBC', '416-111-1111');
 --INSERT INTO branch VALUES(033, 1111111, '42 Rebbecca Rd', 'CIBC', '416-222-2222');
@@ -35,6 +36,8 @@
 --        where address = '235 Canada Rd'; 
 --
 --
+
+
 /*Print customer_id in descending order of customers with loans greater than
 $5,000*/
 SELECT customer_id
@@ -49,7 +52,12 @@ SELECT supervisee_id
         WHERE supervisor_id = 1111111
             ORDER BY supervisee_id;
             
-
+/*Prints out the amount of employees under each supervisor*/            
+SELECT COUNT(supervisee_id), supervisor_id
+    FROM supervises
+        GROUP BY supervisor_id
+            ORDER BY COUNT(supervisee_id);
+            
 
 /*Prints the banks which have a branch number > 011 in ascending order*/
 SELECT DISTINCT bank_name
