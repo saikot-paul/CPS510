@@ -13,8 +13,8 @@ INSERT INTO loan VALUES('33333', 'Personal', 2500, '1', 1234567);
 INSERT INTO loan VALUES('22222', 'Mortgage', 100000, '2', 1234567);
 
 INSERT INTO supervises VALUES(1234567, 1111111);
-INSERT INTO supervises VALUES(3333333, 1111111);
-INSERT INTO supervises VALUES(2222222, 4444444);
+INSERT INTO supervises VALUES(2222222, 1111111);
+INSERT INTO supervises VALUES(3333333, 4444444);
 --
 INSERT INTO branch VALUES(022, 1111111, '123 Alberta Rd', 'CIBC', '416-111-1111');
 INSERT INTO branch VALUES(033, 1111111, '42 Rebbecca Rd', 'CIBC', '416-222-2222');
@@ -42,6 +42,13 @@ INSERT INTO customer_and_accnts VALUES('0', '0');
 INSERT INTO customer_and_accnts VALUES('1', '1');
 INSERT INTO customer_and_accnts VALUES('2', '2'); 
 INSERT INTO customer_and_accnts VALUES('0', '3'); 
+
+INSERT INTO savings_account VALUES('0', '0', 0.07);
+INSERT INTO savings_account VALUES('2', '2', 0.03);
+
+INSERT INTO accesses VALUES('3333333', '0', '0','0');
+INSERT INTO accesses VALUES('3333333', '1', '1','1');
+INSERT INTO accesses VALUES('3333333', '2', '2', '4');
 --
 --
 --UPDATE customer SET address = '256 Canada Rd' where customer_id = '000000000' ; 
@@ -93,6 +100,7 @@ SELECT t.account_no, t.amount
     FROM transaction t
         WHERE t.amount>=2000  
         ORDER BY t.amount DESC;
+        
 --Prints customer id and how many accounts they have       
 SELECT customer_id, count(customer_id) cus
     FROM customer_and_accnts
@@ -102,7 +110,26 @@ SELECT customer_id, count(customer_id) cus
 SELECT customer_id, customer_name 
     FROM customer; 
     
-    
+ /*Prints the employee's role and their id in order of their roles*/                    
+SELECT DISTINCT emp_id, emp_role
+    FROM employee 
+        ORDER BY emp_role;
+
+/*Prints the accounts that have saving accounts*/
+SELECT account_no, interest
+    FROM savings_account 
+      ORDER BY account_no;   
+ 
+/*Prints the number of accounts a certain employee has access to */  
+SELECT count(account_no), emp_id
+    FROM accesses
+    GROUP BY emp_id;
+
+/*Prints the department with a number of 555*/   
+SELECT  department_no, dept_name
+    FROM department
+        WHERE department_no = '555'
+            ORDER BY dept_name;
 
 
 
