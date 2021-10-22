@@ -62,7 +62,7 @@ CREATE TABLE branch (
     branch_manager_id INTEGER,
     address VARCHAR(20) NOT NULL,
     bank_name VARCHAR(20) NOT NULL,
-    phone_no NUMBER(9) NOT NULL,
+    phone_no VARCHAR(12) NOT NULL,
     FOREIGN KEY (branch_manager_id) REFERENCES employee(emp_id)
 );
 
