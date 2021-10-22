@@ -93,10 +93,15 @@ SELECT t.account_no, t.amount
     FROM transaction t
         WHERE t.amount>=2000  
         ORDER BY t.amount DESC;
-        
+--Prints customer id and how many accounts they have       
 SELECT customer_id, count(customer_id) cus
     FROM customer_and_accnts
-    GROUP BY customer_id 
+    GROUP BY customer_id;
+    
+--Prints customer id and their name 
+SELECT customer_id, customer_name 
+    FROM customer; 
+    
     
 
 
