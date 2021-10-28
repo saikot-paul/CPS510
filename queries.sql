@@ -86,13 +86,38 @@ FROM branch_and_dept bd, branch b, department d
 WHERE bd.branch_no = b.branch_no
 AND bd.department_no = d.department_no;
 
-/*Incomplete -- suppose to print out emp name and average amount of loans they
+/*Print out emp name and average amount of loans they
 approved*/
 SELECT e.emp_name, AVG(l.amount)
 FROM employee e, loan l
 WHERE e.emp_id = l.employee_id
-GROUP BY emp_name;
---ORDER BY DESC;
+GROUP BY emp_name
+ORDER BY AVG(l.amount) ASC;
+
+/*Print out customer name account number and balance*/ 
+CREATE view cust_and_accnt_balance(customer_name, account_no, balance) as 
+(SELECT c.customer_name, a.account_no, a.balance
+    FROM  account a, customer c, customer_and_accnts ca 
+        WHERE (
+            ca.customer_id = c.customer_id
+        and ca.account_id = a.account_no
+)); 
+        
+/*Create view of customer name, account number and the average transaction amount of the account associated with the customer*/ 
+CREATE view cust_and_avg_transaction(customer_name, account_no, avg_transaction) as 
+(SELECT c.customer_name, a.account_no, avg(t.amount) as average_transaction_amount
+    FROM  account a, customer c, customer_and_accnts ca, transaction t 
+        WHERE (
+            ca.customer_id = c.customer_id
+        and ca.account_id = a.account_no
+        and ca.account_id = t.account_no
+)
+        group by c.customer_name, a.account_no, a.balance 
+); 
+
+
+
+
 
 
 
