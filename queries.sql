@@ -115,13 +115,19 @@ CREATE view cust_and_avg_transaction(customer_name, account_no, avg_transaction)
         group by c.customer_name, a.account_no, a.balance 
 ); 
 
+/*Print out the account number and balance if they use a savings account*/
+SELECT  account.account_no, account.balance, s.interest
+    FROM  savings_account s
+   INNER JOIN account 
+    ON s.account_no = account.account_no;
 
-
-
-
-
-
-            
+/*Create a view of all the loan officers and the loan accounts they control*/
+CREATE view loan_officers AS 
+    SELECT e.emp_id, e.emp_name, l.loan_no, l.loan_type, l.amount  
+        FROM employee e, loan l
+            WHERE (e.emp_role = 'Loan Officer'
+           and l.employee_id = e.emp_id)
+                ORDER BY e.emp_id;
 
 
 

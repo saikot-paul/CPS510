@@ -16,3 +16,4 @@ DROP TABLE transaction CASCADE CONSTRAINTS;
 -- Views -- 
 DROP VIEW cust_and_avg_transaction;
 DROP VIEW cust_and_accnt_balance; 
+DROP VIEW loan_officers;
