@@ -128,7 +128,41 @@ CREATE view loan_officers AS
             WHERE (e.emp_role = 'Loan Officer'
            and l.employee_id = e.emp_id)
                 ORDER BY e.emp_id;
+                
+/*Find customers who have more than 1 account and print out their name, customer id, and number of accounts they hold*/ 
+SELECT c.customer_name, c.customer_id, cna.num_accnts 
+FROM (
+    SELECT ca.customer_id, count(ca.customer_id)as num_accnts
+    FROM customer_and_accnts ca
+    GROUP BY (ca.customer_id) 
+    ORDER BY (ca.customer_id)) cna, customer c 
+WHERE (cna.num_accnts>1
+AND   cna.customer_id = c.customer_id
+); 
 
+/*Print out customer names and id who have made transactions greater than 1000 or none at all */ 
+(SELECT c.customer_name, c.customer_id 
+ FROM customer c, transaction t, customer_and_accnts ca, account a
+    WHERE( 
+        ca.customer_id = c.customer_id 
+    and ca.account_id = a.account_no
+    and t.account_no = a.account_no 
+    and t.amount>1000))
+UNION  
+(SELECT customer_name, customer_id
+FROM customer
+WHERE 
+    NOT EXISTS 
+            (SELECT DISTINCT(c.customer_id), a.account_no    
+            FROM customer c, transaction t, customer_and_accnts ca, account a
+            WHERE( 
+                ca.customer_id = c.customer_id 
+            and ca.account_id = a.account_no
+            and t.account_no = a.account_no
+            ))
+);        
 
-
-
+/*Print out employee names, id and role who do not work in the customer service field*/ 
+SELECT DISTINCT(e.emp_id), e.emp_name, e.emp_role
+FROM accesses a, employee e 
+WHERE e.emp_id NOT IN a.emp_id
