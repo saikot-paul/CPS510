@@ -165,4 +165,27 @@ WHERE
 /*Print out employee names, id and role who do not work in the customer service field*/ 
 SELECT DISTINCT(e.emp_id), e.emp_name, e.emp_role
 FROM accesses a, employee e 
-WHERE e.emp_id NOT IN a.emp_id
+WHERE e.emp_id NOT IN a.emp_id;
+
+/*Prints the customers with greater than 10000 in their account*/
+SELECT customer_name, customer_id
+FROM customer c
+WHERE EXISTS(SELECT a.balance FROM account a WHERE a.account_no = c.customer_id AND a.balance > 10000);
+
+/*Prints out which branch is the only branch that has a marketing department */
+SELECT b.branch_no, b.bank_name, d.dept_name
+FROM branch_and_dept bd, branch b, department d
+WHERE bd.branch_no = b.branch_no
+AND bd.department_no = d.department_no
+MINUS
+SELECT b.branch_no, b.bank_name, d.dept_name
+FROM branch_and_dept bd, branch b, department d
+WHERE bd.branch_no = b.branch_no
+AND bd.department_no = d.department_no
+AND bd.department_no NOT IN('888')
+;
+
+
+
+
+
