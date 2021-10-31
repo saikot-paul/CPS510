@@ -1,0 +1,26 @@
+#!/bin/sh
+export LD_LIBRARY_PATH=/usr/lib/oracle/12.1/client64/lib
+sqlplus64 "usersame/password@(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(Host=oracle12c.scs.ryerson.ca)(Port=1521))(CONNECT_DATA=(SID=orcl12c)))" <<EOF
+
+
+DROP TABLE accesses CASCADE CONSTRAINTS;
+DROP TABLE account CASCADE CONSTRAINTS;
+DROP TABLE branch CASCADE CONSTRAINTS;
+DROP TABLE branch_and_dept CASCADE CONSTRAINTS;
+DROP TABLE customer CASCADE CONSTRAINTS;
+DROP TABLE customer_and_accnts CASCADE CONSTRAINTS;
+DROP TABLE department CASCADE CONSTRAINTS;
+DROP TABLE employee CASCADE CONSTRAINTS;
+DROP TABLE loan CASCADE CONSTRAINTS;
+DROP TABLE savings_account CASCADE CONSTRAINTS;
+DROP TABLE supervises CASCADE CONSTRAINTS;
+DROP TABLE transaction CASCADE CONSTRAINTS;
+
+
+DROP VIEW cust_and_avg_transaction;
+DROP VIEW cust_and_accnt_balance; 
+DROP VIEW loan_officers;
+
+exit;
+EOF
+

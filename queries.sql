@@ -71,7 +71,7 @@ SELECT  department_no, dept_name
         WHERE department_no = '555'
             ORDER BY dept_name;
             
-            --- ADVANCED QUERIES ---
+            --- ASSIGNMENT 4B: ADVANCED QUERIES ---
             
 /*Prints amount of departments each branch has*/
 SELECT b.branch_no, COUNT(*) as Amount_Of_Departments
@@ -128,6 +128,8 @@ CREATE view loan_officers AS
             WHERE (e.emp_role = 'Loan Officer'
            and l.employee_id = e.emp_id)
                 ORDER BY e.emp_id;
+                
+                        --- ASSIGNMENT 5 ---
                 
 /*Find customers who have more than 1 account and print out their name, customer id, and number of accounts they hold*/ 
 SELECT c.customer_name, c.customer_id, cna.num_accnts 
