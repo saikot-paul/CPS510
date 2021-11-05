@@ -4,8 +4,7 @@ create table customer(
     customer_name varchar(20),
     address varchar(20), 
     pin varchar(4) not null, 
-    primary key (customer_id), 
-    unique (pin)
+    primary key (customer_id)
 ); 
 
 /*Account table with attributes*/ 
