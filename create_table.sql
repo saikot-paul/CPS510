@@ -14,12 +14,21 @@ create table account(
     primary key (account_no)
 ); 
 
+create table chequings_account(
+    account_no varchar(10), 
+    balance float default 0, 
+    foreign key (account_no) references account(account_no) , 
+    primary key (account_no) 
+); 
+    
+
 create table savings_account( 
     account_no varchar(10), 
     parent_account_no varchar(10), 
     interest float,
     
-    foreign key (account_no) references account(account_no)
+    foreign key (account_no) references account(account_no),
+    primary key(account_no) 
 );
 
 /*Customer and accounts table - shows the M-N relationship between the two entities*/ 
